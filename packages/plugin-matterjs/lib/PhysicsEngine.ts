@@ -1,6 +1,7 @@
 import Matter from './matter';
 import BodiesFactory from './BodiesFactory';
-import {Component, Game} from '@eva/eva.js';
+import {Game} from '@eva/eva.js';
+import { Physics } from './Physics';
 export default class PhysicsEngine {
   private Engine: any;
   private World: any;
@@ -95,8 +96,8 @@ export default class PhysicsEngine {
         for (let i = 0; i < pairs.length; i++) {
           const pair = pairs[i];
           const {bodyA, bodyB} = pair;
-          const componentA: Component = bodyA.component;
-          const componentB: Component = bodyB.component;
+          const componentA: Physics = bodyA.component;
+          const componentB: Physics = bodyB.component;
           componentA.emit(eventName, componentB.gameObject, componentA.gameObject);
           componentB.emit(eventName, componentA.gameObject, componentB.gameObject);
         }

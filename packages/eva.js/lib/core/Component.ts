@@ -14,6 +14,9 @@ export interface UpdateParams {
 
   /** fps at current frame */
   fps: number;
+
+  /** current time from game start */
+  currentTime: number;
 }
 
 /** type of Component is function */
@@ -31,8 +34,8 @@ export type ComponentType = typeof Component;
  * assert(getComponentName(new Transform()) === 'Transform')
  * ```
  */
-export function getComponentName<T extends Component, U extends ComponentType>(
-  component: T | U,
+export function getComponentName(
+  component
 ): string {
   if (component instanceof Component) {
     return component.name;
@@ -45,7 +48,7 @@ export function getComponentName<T extends Component, U extends ComponentType>(
  * Component contain raw data apply to gameObject and how it interacts with the world
  * @public
  */
-class Component extends EventEmitter {
+class Component<Type> extends EventEmitter {
   /** Name of this component */
   static componentName: string;
 
@@ -67,9 +70,9 @@ class Component extends EventEmitter {
   gameObject: GameObject;
 
   /** Default paramaters for this component */
-  __componentDefaultParams: string;
+  __componentDefaultParams: Type;
 
-  constructor(params?: any) {
+  constructor(params?: Type) {
     super();
     // @ts-ignore
     this.name = this.constructor.componentName;
@@ -81,7 +84,7 @@ class Component extends EventEmitter {
    * @param params - optional initial parameters
    * @override
    */
-  init?(params?: any): void;
+  init?(params?: Type): void;
 
   /**
    * Called when component is added to a gameObject

@@ -87,8 +87,8 @@ export default class A11ySystem extends System {
    * dom 延迟放置
    */
   delay: number;
-  cache: Map<String, HTMLElement> = new Map();
-  eventCache: Map<String, Function> = new Map();
+  cache: Map<string, HTMLElement> = new Map();
+  eventCache: Map<string, Function> = new Map();
   /**
    *
    * @param opt
@@ -267,15 +267,12 @@ export default class A11ySystem extends System {
     const component = changed.component as A11y;
     const {gameObject} = changed;
     const {delay, a11yId: id} = component;
-    let {event} = component;
     if (!gameObject) return;
     const {transform} = gameObject;
     if (!transform) return;
     const element = document.createElement('div');
     this.cache.set(id, element);
-    if (!event) {
-      event = gameObject.getComponent('Event');
-    }
+    const event = gameObject.getComponent('Event');
     setTimeout(() => {
       this.setPosition(element, transform);
       this.setA11yAttr(element, component);
@@ -369,7 +366,7 @@ export default class A11ySystem extends System {
       element.setAttribute(key, state[key]);
     }
 
-    for (let key of Object.keys(component)) {
+    for (const key of Object.keys(component)) {
       if (
         typeof component[key] === 'string' &&
         notAttr.indexOf(key) === -1 &&

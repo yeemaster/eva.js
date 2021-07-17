@@ -3,7 +3,6 @@ import {uuid} from './utils';
 
 export interface A11yParams {
   hint: string;
-  event?: Component;
   delay?: number;
   role?: string;
   props?: object;
@@ -13,7 +12,7 @@ export interface A11yParams {
   [propName: string]: string | object | number;
 }
 
-export default class A11y extends Component {
+export default class A11y extends Component<A11yParams> {
   static componentName: string = 'A11y';
 
   /**
@@ -24,11 +23,6 @@ export default class A11y extends Component {
    * 无障碍标签朗读内容
    */
   @decorators.IDEProp hint: string;
-  /**
-   * 弃用，将根据Event组件自动添加
-   * 事件对象
-   */
-  @decorators.IDEProp event: Component;
   /**
    * 延时加载时间（millisecond）
    */
@@ -84,7 +78,6 @@ export default class A11y extends Component {
     Object.assign(this, param);
     const {
       hint = '',
-      event,
       delay = 0,
       attr = {},
       role = '',
@@ -92,7 +85,6 @@ export default class A11y extends Component {
       state = {},
     } = param;
     this.hint = hint;
-    this.event = event;
     this.delay = delay;
     this.attr = attr;
     this.role = role;

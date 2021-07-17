@@ -5,7 +5,7 @@ import { PureObserverProp, ObserverType } from './observer';
 
 export interface ObserverEventParams {
   type: ObserverType;
-  component: Component;
+  component: Component<any>;
   componentName: string;
   prop?: PureObserverProp;
 }
